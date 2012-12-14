@@ -9,6 +9,7 @@ exports.for = function(API, plugin) {
     plugin.install = function(packagePath, options) {
         var opts = API.UTIL.copy(options);
         opts.cwd = packagePath;
+        // TODO: Set `opts.silent = true` to only print buffer on error.
         // TODO: Insert config args from `plugin.node.summary.config.args`.
         return API.OS.spawnInline("./configure", [], opts).then(function() {
             return API.OS.spawnInline("make", [], opts);
