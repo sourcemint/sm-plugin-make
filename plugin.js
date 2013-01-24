@@ -18,13 +18,13 @@ exports.for = function(API, plugin) {
 
     plugin.test = function(node, options) {
         // package.json is king.
-        if (!node.descriptors.package.scripts || !node.descriptors.package.scripts.test) {
+        if (!node.descriptor.package.scripts || !node.descriptor.package.scripts.test) {
             var opts = API.UTIL.copy(options);
             opts.cwd = node.path;
             return API.OS.spawnInline("make", [ "test" ], opts);
         }
 
-        // TODO: Call `node.descriptors.package.scripts.test` command.
+        // TODO: Call `node.descriptor.package.scripts.test` command.
         return API.Q.resolve();
     }
 }
