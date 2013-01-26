@@ -10,8 +10,16 @@ exports.for = function(API, plugin) {
         var opts = API.UTIL.copy(options);
         opts.cwd = packagePath;
         // TODO: Set `opts.silent = true` to only print buffer on error.
-        // TODO: Insert config args from `plugin.node.summary.config.args`.
-        return API.OS.spawnInline("./configure", [], opts).then(function() {
+
+        function configure() {
+            if (!PATH.existsSync(PATH.join(packagePath, "./configure"))) {
+                return API.Q.resolve();
+            }
+            // TODO: Insert config args from `plugin.node.summary.config.args`.
+            return API.OS.spawnInline("./configure", [], opts);
+        }
+
+        return configure().then(function() {
             return API.OS.spawnInline("make", [], opts);
         });
     }
