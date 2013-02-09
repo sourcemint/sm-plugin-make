@@ -1,6 +1,5 @@
 
 const PATH = require("path");
-const FS = require("fs");
 const SPAWN = require("child_process").spawn;
 
 
@@ -12,7 +11,7 @@ exports.for = function(API, plugin) {
         // TODO: Set `opts.silent = true` to only print buffer on error.
 
         function configure() {
-            if (!PATH.existsSync(PATH.join(packagePath, "./configure"))) {
+            if (!API.FS.existsSync(PATH.join(packagePath, "./configure"))) {
                 return API.Q.resolve();
             }
             // TODO: Insert config args from `plugin.node.summary.config.args`.
